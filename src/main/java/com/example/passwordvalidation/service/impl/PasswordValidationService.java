@@ -30,7 +30,9 @@ public class PasswordValidationService {
 				.map(PasswordValidationRuleResponse::getErrorMessage).collect(Collectors.toList());
 
 		//Among 4 conditions 2 are success we are returning true
-		if (null != errorList && errorList.size() <= 2) {
+		if (null != errorList && 
+			errorList.size() <= 2 && 
+			!errorList.contains(AppConstants.PASSWORD_ONE_LOWERCASE_MSG)) {
 			return true;
 		} else {
 			//we are returning all error messages 
