@@ -14,15 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.passwordvalidation.dto.PasswordLengthRule;
-import com.example.passwordvalidation.dto.PasswordNotNullRule;
 import com.example.passwordvalidation.dto.PasswordOneLowerCaseRule;
 import com.example.passwordvalidation.dto.PasswordOneNumberRule;
 import com.example.passwordvalidation.dto.PasswordOneUpperCaseRule;
 import com.example.passwordvalidation.dto.PasswordValidationRule;
 import com.example.passwordvalidation.exception.PasswordPolicyException;
 import com.example.passwordvalidation.service.impl.PasswordValidationService;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * @author vinod
@@ -37,9 +34,10 @@ public class PasswordValidationController {
 	@PostMapping
 	public ResponseEntity<?> validatePassword(@RequestParam String secret) {
 		try {
+			
 			List<PasswordValidationRule> ruleList = new ArrayList<>();
 			ruleList.add(new PasswordLengthRule());
-			ruleList.add(new PasswordNotNullRule());
+			//ruleList.add(new PasswordNotNullRule());
 			ruleList.add(new PasswordOneUpperCaseRule());
 			ruleList.add(new PasswordOneLowerCaseRule());
 			ruleList.add(new PasswordOneNumberRule());

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -22,15 +23,17 @@ public class PasswordValidationService {
 		if(StringUtils.isEmpty(password)) {
 			throw new PasswordPolicyException(HttpStatus.BAD_REQUEST.value(), AppConstants.PASSWORD_NOT_NULL_MSG);
 		}
-
+		
 		List<PasswordValidationRuleResponse> ruleResponse = ruleList.stream().map(obj -> obj.isValid(password))
 				.collect(Collectors.toList());
 		List<String> errorList = ruleResponse.stream().filter(obj -> !obj.isValid())
 				.map(PasswordValidationRuleResponse::getErrorMessage).collect(Collectors.toList());
 
-		if (CollectionUtils.isEmpty(errorList)) {
+		//Among 4 conditions 2 are success we are returning true
+		if (null != errorList && errorList.size() <= 2) {
 			return true;
 		} else {
+			//we are returning all error messages 
 			throw new PasswordPolicyException(HttpStatus.BAD_REQUEST.value(), errorList.toString());
 		}
 	}
