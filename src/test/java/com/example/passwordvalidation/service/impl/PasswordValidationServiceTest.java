@@ -86,10 +86,10 @@ public class PasswordValidationServiceTest {
 	@Test
 	public void isValidPasswordWithNoLowerCaseException() throws PasswordPolicyException {
 		String password = "TEST@1234";
-		boolean result = service.isValidPassword(password, rules);
-		assertEquals(true, result);
-//		assertThatThrownBy(() -> service.isValidPassword(password, rules))
-//        .isInstanceOf(PasswordPolicyException.class);
+//		boolean result = service.isValidPassword(password, rules);
+//		assertEquals(true, result);
+		assertThatThrownBy(() -> service.isValidPassword(password, rules))
+        .isInstanceOf(PasswordPolicyException.class);
 	}
 
 	@Test
